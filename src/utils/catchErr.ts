@@ -13,6 +13,8 @@ const CatchErr = (err: { code?: string }) => {
     toastInfo("logout and login before updating your profile.");
   else if (code === "unavailable") toastErr("firebase client is offline.");
   else if (code === "auth/invalid-credential") toastErr("Invalid Credentials.");
+  else if (code === "auth/operation-not-allowed")
+    toastErr("Can't change email");
   else toastErr("An error occured!");
   console.log(err, err.code);
 };

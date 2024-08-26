@@ -27,7 +27,7 @@ function Header() {
     } else {
       goTo("/auth");
     }
-  }, []);
+  }, [dispatch, goTo]);
 
   useEffect(() => {
     if (!currentUser?.id) goTo("/auth");
@@ -55,7 +55,7 @@ function Header() {
   };
 
   return (
-    <div className="flex flex-wrap sm:flex-row gap-5 items-center justify-between drop-shaodw-md bg-gradient-to-r from-myBlue to-myPink px-5 py-5 md:py-2 text-white">
+    <div className="flex flex-wrap z-10 sm:flex-row gap-5 items-center justify-between drop-shadow-md bg-gradient-to-r from-myBlue to-myPink px-5 py-5 md:py-2 text-white">
       <img
         className="w-[50px] drop-shadow-md cursor-pointer"
         src={logo}
@@ -63,14 +63,23 @@ function Header() {
       />
       <div className="flex flex-row-reverse md:flex-row items-center justify-center gap-5 flex-wrap">
         {getCurrentPage() === "chat" ? (
-          <Icon IconName={FaList} onClick={() => handleGoToPage("")} />
+          <Icon
+            IconName={FaList}
+            onClick={() => handleGoToPage("")}
+            reduceOpacityOnHover={false}
+          />
         ) : getCurrentPage() === "profile" ? (
           <>
-            <Icon IconName={FaList} onClick={() => handleGoToPage("")} />
+            <Icon
+              IconName={FaList}
+              onClick={() => handleGoToPage("")}
+              reduceOpacityOnHover={false}
+            />
             <Icon
               IconName={BsChatFill}
               ping={true}
               onClick={() => handleGoToPage("chat")}
+              reduceOpacityOnHover={false}
             />
           </>
         ) : (
@@ -80,6 +89,7 @@ function Header() {
               IconName={BsChatFill}
               ping={true}
               onClick={() => handleGoToPage("chat")}
+              reduceOpacityOnHover={false}
             />
           </>
         )}
