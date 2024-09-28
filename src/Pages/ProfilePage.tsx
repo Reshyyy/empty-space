@@ -88,6 +88,7 @@ function ProfilePage() {
         />
         <span className="absolute top-7 md:top-7 left-28 md:left-40 w-5 h-5 border-2 border-gray-800 rounded-full bg-green-400"></span>
       </div>
+
       <p className="text-gray-400 text-sm text-center">
         Note: Click on image to temporarily change it, when you like it, then
         save profile. You can leave password and username as they are if you

@@ -29,6 +29,7 @@ const AddListBoard = () => {
         IconName={IoIosAdd}
         className="block md:hidden"
         loading={addLoading}
+        reduceOpacityOnHover={false}
       />
     </>
   );

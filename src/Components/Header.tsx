@@ -7,7 +7,7 @@ import UserHeaderProfile from "./UserHeaderProfile";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../Redux/store";
 import { useNavigate } from "react-router-dom";
-import { BE_signOut, getStorageUser } from "../Backend/Queries";
+import { BE_getChats, BE_signOut, getStorageUser } from "../Backend/Queries";
 import Spinner from "./Spinner";
 import { setUser } from "../Redux/userSlice";
 const logo = require("./../Assets/ryo.jpg");
@@ -19,6 +19,9 @@ function Header() {
   const goTo = useNavigate();
   const dispatch = useDispatch();
   const currentUser = useSelector((state: RootState) => state.user.currentUser);
+  const hasNewMessage = useSelector(
+    (state: RootState) => state.chat.hasNewMessage
+  );
 
   const usr = getStorageUser();
   useEffect(() => {
@@ -36,6 +39,12 @@ function Header() {
   useEffect(() => {
     const page = getCurrentPage();
     if (page) goTo("/dashboard/" + page);
+
+    const get = async () => {
+      if (usr?.id) await BE_getChats(dispatch);
+    };
+
+    get();
   }, [goTo]);
 
   const handleGoToPage = (page: string) => {
@@ -77,7 +86,7 @@ function Header() {
             />
             <Icon
               IconName={BsChatFill}
-              ping={true}
+              ping={hasNewMessage}
               onClick={() => handleGoToPage("chat")}
               reduceOpacityOnHover={false}
             />
@@ -87,7 +96,7 @@ function Header() {
             <AddListBoard />
             <Icon
               IconName={BsChatFill}
-              ping={true}
+              ping={hasNewMessage}
               onClick={() => handleGoToPage("chat")}
               reduceOpacityOnHover={false}
             />
@@ -103,13 +112,13 @@ function Header() {
               >
                 Profile
               </p>
-              <p
+              <button
                 onClick={() => !logoutLoading && handleSignOut()}
-                className={`hover:bg-gray-200 py-2 px-4 cursor-pointer flex items-center gap-4`}
+                className={`hover:bg-gray-200 w-full py-2 px-4 cursor-pointer flex items-center gap-4`}
               >
                 Logout
                 {logoutLoading && <Spinner />}
-              </p>
+              </button>
             </ul>
           </div>
         </div>
